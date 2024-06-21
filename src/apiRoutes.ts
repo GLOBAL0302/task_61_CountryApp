@@ -1,0 +1,1 @@
+export const AllCountriesURL = "https://restcountries.com/v2/all?fields=alpha3Code,name"
