@@ -12,6 +12,8 @@ const App = () => {
 
     ])
 
+  const [selectedCountry, setSelectedCountry] = useState<string|null>(null)
+
   const fetchData = useCallback(async ()=>{
     const {data:countriesList} = await axios.get<ICountry[]>(AllCountriesURL)
     setAllCountries(countriesList)
@@ -21,12 +23,20 @@ const App = () => {
     void fetchData()
   }, [fetchData]);
 
+  const selectCountry = (country:ICountry)=>{
+    setSelectedCountry(country.alpha3Code)
+  }
+
   return (
     <>
       <div className="col-12 d-flex border border-5 p-3 bg-secondary">
         <CountriesList
-          allCountries={allCountries}/>
-        <CountryInfo/>
+          allCountries={allCountries}
+          selectCountry={selectCountry}
+        />
+        {selectedCountry?<CountryInfo
+          selectedCountry={selectedCountry}
+        />: <h4 className="ms-auto me-auto">Please Choose Country</h4>}
       </div>
     </>
   )
